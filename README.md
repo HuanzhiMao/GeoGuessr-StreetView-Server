@@ -111,12 +111,5 @@ upload tools, demos, CLI, and duplicate BFCL-style wrapper have been removed.
 
 ```sh
 pip install -r requirements-dev.txt
-python -m pytest
-ruff check apps tests
+ruff check apps
 ```
-
-Tests use temporary SQLite databases and fake image storage, without cloud
-credentials. The consumer compatibility test also exercises the real BFCL
-client when it is available at the sibling `gorilla-hans` checkout, or at
-`BFCL_STREET_VIEW_PATH`. That external-client test is skipped if the file is
-absent; the self-contained server tests still run.
