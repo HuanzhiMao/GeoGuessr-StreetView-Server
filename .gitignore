@@ -1,0 +1,22 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.venv/
+env/
+venv/
+*.egg-info/
+.env
+.DS_Store
+.vscode/
+
+# Local data and outputs are not part of the service.
+*.db
+*.db-shm
+*.db-wal
+images/
+crawl_images/
+mapcrunch_images/
+test_mapcrunch_single_images/
+node_modules/
+.claude/

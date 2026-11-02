@@ -1,0 +1,28 @@
+services:
+  streetview:
+    build:
+      context: .
+      dockerfile: Dockerfile.python
+    environment:
+      HOST: 0.0.0.0
+      PORT: "18000"
+      MAPCRUNCH_DB_PATH: /data/mapcrunch.db
+      MAPCRUNCH_GCS_BUCKET: ${MAPCRUNCH_GCS_BUCKET:?Set MAPCRUNCH_GCS_BUCKET}
+      MAPCRUNCH_GCS_PREFIX: ${MAPCRUNCH_GCS_PREFIX:-mapcrunch_images/}
+      MAPCRUNCH_CACHE_DIR: /cache
+      MAPCRUNCH_CACHE_SIZE_GB: ${MAPCRUNCH_CACHE_SIZE_GB:-5}
+      GOOGLE_CLOUD_PROJECT: ${GOOGLE_CLOUD_PROJECT:?Set GOOGLE_CLOUD_PROJECT}
+      GOOGLE_APPLICATION_CREDENTIALS: /run/secrets/gcp.json
+      GEOGUESSR_CROP: ${GEOGUESSR_CROP:-off}
+      SERVER_THREADS: ${SERVER_THREADS:-8}
+      SERVER_CONNECTION_LIMIT: ${SERVER_CONNECTION_LIMIT:-100}
+      SESSION_IDLE_TIMEOUT: ${SESSION_IDLE_TIMEOUT:-43200}
+    volumes:
+      - ${MAPCRUNCH_DB_PATH:?Set MAPCRUNCH_DB_PATH}:/data/mapcrunch.db:ro
+      - ${GOOGLE_APPLICATION_CREDENTIALS:?Set GOOGLE_APPLICATION_CREDENTIALS}:/run/secrets/gcp.json:ro
+      - streetview-cache:/cache
+    ports:
+      - "127.0.0.1:18000:18000"
+
+volumes:
+  streetview-cache:
